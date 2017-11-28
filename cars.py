@@ -32,7 +32,7 @@ for loop in range(10000):
 		leading_car = car + 1 if car + 1 != len(data) else 0
 		velocity_diff = v - data[leading_car]['velocity']
 		position_diff = max(data[car]['position'][1] - data[leading_car]['position'][1], .02)
-		s_star = clearing_time*v + (v*velocity_diff)/(2*math.sqrt(max_accel*max_deaccel))
+		s_star = max(0, clearing_time*v + (v*velocity_diff)/(2.*math.sqrt(max_accel*max_deaccel)))
 		term1 = v / desired_vel
 		term2 = s_star / position_diff
 		data[car]['accel'] = max_accel*(1 - term1 - (term2)**2.)
