@@ -27,8 +27,8 @@ def draw_lanes():
         y += LANE_HEIGHT
 
 if __name__ == "__main__" :
-    init_pos = (0, 200)
-    car = Car(init_pos)
+    car = Car(0, 0)
+    i = 0
     while True:
         # quit on any key
         for event in pygame.event.get():
@@ -36,11 +36,15 @@ if __name__ == "__main__" :
                 pygame.quit()
                 sys.exit()
 
-
+        # update display
         draw_lanes()
         car.draw(screen)
-        car.pos = (car.pos[0] + 5, car.pos[1])
+        car.pos += 5
         pygame.display.flip()
         pygame.display.update()
         screen.blit(surface, (0, 0))
         clock.tick(FPS)
+
+        i += 1
+        if i % 12 == 0:
+            car.change_lane(DOWN)

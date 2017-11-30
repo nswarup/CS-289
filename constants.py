@@ -1,5 +1,9 @@
 # note: width/height are always from the perspective of the screen
 
+# directions
+UP = 0
+DOWN = 1
+
 # car dimensions
 CAR_WIDTH = 15
 CAR_HEIGHT = 7
@@ -8,7 +12,7 @@ CAR_COLOR = (230, 0, 0) # dark red
 
 # lane dimensions
 LANES = 4
-LANE_HEIGHT = CAR_HEIGHT + 6
+LANE_HEIGHT = CAR_HEIGHT + 15
 LANE_HASH_WIDTH = 10
 LANE_HASH_HEIGHT = 2
 LANE_HASH_DIMENSIONS = (LANE_HASH_WIDTH, LANE_HASH_HEIGHT)
