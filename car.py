@@ -11,9 +11,9 @@ class Car(object):
         self.color = CAR_COLOR
         self.pos = pos
 
-    def draw(self, surface):
+    def draw(self, screen):
         """
         Draw car at its current position.
         """
         r = pygame.Rect(self.pos, CAR_DIMENSIONS)
-        pygame.draw.rect(surface, self.color, r)
+        pygame.draw.rect(screen, self.color, r)
