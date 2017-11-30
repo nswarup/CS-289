@@ -1,42 +1,23 @@
 import pygame
 from pygame.locals import *
+from constants import *
+from car import *
 
-class App:
-    def __init__(self):
-        self._running = True
-        self._display_surf = None
-        self.size = self.weight, self.height = 1000, 400
-
-    def on_init(self):
-        pygame.init()
-        self._display_surf = pygame.display.set_mode(
-                self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        self._running = True
-
-    def on_event(self, event):
-        if event.type == pygame.QUIT:
-            self._running = False
-
-    def on_loop(self):
-        pass
-
-    def on_render(self):
-        pass
-
-    def on_cleanup(self):
-        pygame.quit()
-
-    def on_execute(self):
-        if self.on_init() == False:
-            self._running = False
-
-        while(self._running):
-            for event in pygame.event.get():
-                self.on_event(event)
-            self.on_loop()
-            self.on_render()
-        self.on_cleanup()
+# set up screen
+pygame.init()
+screen = pygame.display.set_mode(SCREEN_DIMENSIONS, 0, 32)
+surface = pygame.Surface(screen.get_size()).convert() # may not need this
+surface = surface.convert()
+surface.fill(BACKGROUND_COLOR)
+clock = pygame.time.Clock()
 
 if __name__ == "__main__" :
-    theApp = App()
-    theApp.on_execute()
+    init_pos = (0, 200)
+    car = Car(init_pos)
+    while True:
+        car.draw(screen)
+        car.pos = (car.pos[0] + 5, car.pos[1])
+        pygame.display.flip()
+        pygame.display.update()
+        screen.blit(surface, (0, 0))
+        clock.tick(FPS)
