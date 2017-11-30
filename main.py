@@ -3,7 +3,7 @@ from pygame.locals import *
 from constants import *
 from car import *
 
-# set up screen
+# set up screen and clock
 pygame.init()
 screen = pygame.display.set_mode(SCREEN_DIMENSIONS, 0, 32)
 surface = pygame.Surface(screen.get_size()).convert() # may not need this
