@@ -26,4 +26,11 @@ SCREEN_HEIGHT = LANES * LANE_HEIGHT + 2 * VERTICAL_MARGIN
 SCREEN_DIMENSIONS = (SCREEN_WIDTH, SCREEN_HEIGHT)
 BACKGROUND_COLOR = (0, 0, 0)
 
+# frame rate
 FPS = 10
+
+# names of simulator classes
+SIMULATION_NAMES = [
+    'TestSim',
+    'SingleLaneIDM',
+]

@@ -1,5 +1,7 @@
 import sys
 import pygame
+from test_sim import TestSim
+from single_lane_idm import SingleLaneIDM
 from pygame.locals import *
 from constants import *
 from car import *
@@ -27,8 +29,15 @@ def draw_lanes():
         y += LANE_HEIGHT
 
 if __name__ == "__main__" :
-    car = Car(0, 0)
-    i = 0
+
+    # check usage: python main.py NameOfSimulation
+    assert(len(sys.argv) > 1)
+    assert(sys.argv[1] in SIMULATION_NAMES)
+
+    # instatiate and initialize simulation
+    sim = globals()[sys.argv[1]]()
+    sim.initialize()
+
     while True:
         # quit on any key
         for event in pygame.event.get():
@@ -38,13 +47,9 @@ if __name__ == "__main__" :
 
         # update display
         draw_lanes()
-        car.draw(screen)
-        car.pos += 5
+        sim.draw(screen)
+        sim.update()
         pygame.display.flip()
         pygame.display.update()
         screen.blit(surface, (0, 0))
         clock.tick(FPS)
-
-        i += 1
-        if i % 12 == 0:
-            car.change_lane(DOWN)
