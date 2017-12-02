@@ -2,20 +2,10 @@ import random
 import math
 
 # set up
-lanes = 5
-cars = 1
-t = .01  # seconds
-data = [{'position': [1, random.random()*1000.], # e.g., [lane, pos]
-		 'velocity': float(random.randint(22, 33)), # meters per second
-	 	 'accel': 0. } # miles per hour per hour
-		for car in range(cars)]
+
 data = sorted(data, key=lambda x: x['position'][1])
 print(data)
-max_accel = .73
-max_decel = 2.
-delta = 4.
-desired_vel = 33.
-clearing_time = 1.5  #
+
 
 # initial equilibria
 for loop in range(15):
@@ -35,7 +25,7 @@ for loop in range(15):
 			data[car]['velocity'] = 0
 			v = data[car]['velocity']
 		else:
-			# calculate new positions        
+			# calculate new positions
 			data[car]['position'][1] = (data[car]['position'][1] + v*t + 0.5*a*(t**2)) % 1000
 
 			# update velocity
