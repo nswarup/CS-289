@@ -13,16 +13,16 @@ MAX_ACCEL = .73
 MAX_DECCEL = 2.
 DELTA = 4.
 DESIRED_VEL = 40.
-CLEARING_TIME = 1.5  
+CLEARING_TIME = 1.5
 TIME_STEP = 0.5 # seconds
 
 class SingleLaneIDM(Simulation):
 
     def initialize(self):
         # constants
-        self.cars = [Car(pos=random.random()*1000., 
-                            lane=0, 
-                            velocity=float(random.randint(22, 33))) 
+        self.cars = [Car(pos=random.random()*1000.,
+                            lane=0,
+                            velocity=float(random.randint(22, 33)))
                     for i in range(NUM_CARS)]
         self.cars = sorted(self.cars, key=lambda x: x.pos)
 

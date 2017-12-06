@@ -17,6 +17,7 @@ class TestSim(Simulation):
         self.car.draw(screen)
 
     def update(self):
+        print self.car.pos
         self.car.pos += 5
         self.iteration += 1
         if self.iteration % 12 == 0:

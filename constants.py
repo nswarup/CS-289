@@ -29,6 +29,9 @@ BACKGROUND_COLOR = (0, 0, 0)
 # frame rate
 FPS = 10
 
+# if `False`, will not display visualization or sleep at each loop iteration
+VISUALIZING = False
+
 # names of simulator classes
 SIMULATION_NAMES = [
     'TestSim',
