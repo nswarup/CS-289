@@ -56,6 +56,10 @@ class SingleLaneIDM(Simulation):
             leading_car = self.cars[leading_index]
             velocity_diff = v - leading_car.vel
             position_diff = leading_car.pos - car.pos
+
+            # update running average
+            car.av_following_dist += float(position_diff) / SAMPLE_POINT
+
             if leading_car.pos - car.pos < 0:
                 position_diff = SCREEN_WIDTH + leading_car.pos - car.pos
             s_star = max(0, CLEARING_TIME*v + (v*velocity_diff)/(2*math.sqrt(MAX_ACCEL*MAX_DECCEL)))

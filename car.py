@@ -21,7 +21,10 @@ class Car(object):
         self.color = CAR_COLOR
         self.vel = velocity
         self.accel = 0
+
+        # tracking data
         self.lap = 0
+        self.av_following_dist = 0
 
     def change_lane(self, direction):
         """

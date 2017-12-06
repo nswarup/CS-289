@@ -62,12 +62,13 @@ if __name__ == "__main__" :
         # stop to collect data
         if iteration == SAMPLE_POINT:
             with open(outfile, 'w') as f:
-                fields = ['laps']
+                fields = ['laps', 'av_following_dist']
                 writer = csv.DictWriter(f, fieldnames=fields)
                 writer.writeheader()
                 for car in sim.cars:
                     data = {
                         'laps': car.lap,
+                        'av_following_dist': round(car.av_following_dist, 2),
                     }
                     writer.writerow(data)
             print 'collected data at iteration ' + str(SAMPLE_POINT)
