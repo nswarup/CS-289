@@ -52,11 +52,6 @@ class LaneSwitchIDM(Simulation):
                 # update velocity
                 options['same_vel'] = v + a*TIME_STEP
 
-            # wrap around screen if necessary, and update lap counter
-            if options['same_pos'] >= SCREEN_WIDTH:
-                options['same_pos'] -= SCREEN_WIDTH
-                car.lap += 1
-
             # changing up
             if car.lane > 0:
                 new_lane = car.lane - 1
@@ -131,5 +126,8 @@ class LaneSwitchIDM(Simulation):
             else:
                 raise RuntimeError("No leading car found")
             car.accel = max(min(MAX_ACCEL, MAX_ACCEL*(1 - term1 - (term2)**2.)), -MAX_DECCEL)
+
+            # handle lap counting
+            handle_laps(car)
 
         self.cars = sorted(self.cars, key=lambda x: x.pos)

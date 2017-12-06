@@ -1,6 +1,7 @@
 import sys
 import csv
 import pygame
+from os import system
 from single_lane_idm import SingleLaneIDM
 from multi_lane_idm import MultiLaneIDM
 from lane_switch_idm import LaneSwitchIDM
@@ -56,22 +57,33 @@ if __name__ == "__main__" :
     sim = globals()[sys.argv[1]]()
     sim.initialize()
 
-    iteration = 0
+    step = 0
     while True:
 
         # stop to collect data
-        if iteration == SAMPLE_POINT:
+        if step == SAMPLE_POINT:
             with open(outfile, 'w') as f:
-                fields = ['laps', 'av_following_dist']
+                # fields to keep track of
+                fields = [
+                    'car_id',
+                    'laps',
+                    'av_following_dist',
+                    'min_steps_per_lap',
+                    'max_steps_per_lap',
+                ]
                 writer = csv.DictWriter(f, fieldnames=fields)
                 writer.writeheader()
                 for car in sim.cars:
                     data = {
+                        'car_id': id(car) % ID_SPACE,
                         'laps': car.lap,
                         'av_following_dist': round(car.av_following_dist, 2),
+                        'min_steps_per_lap': car.min_steps,
+                        'max_steps_per_lap': car.max_steps,
                     }
                     writer.writerow(data)
-            print 'collected data at iteration ' + str(SAMPLE_POINT)
+            print '\ncollected data at step ' + str(SAMPLE_POINT) + ' in ' + outfile + ':\n'
+            system('cat ' + outfile + ' | column -t -s,') # pretty-print csv
             break
 
         if VISUALIZING:
@@ -93,4 +105,6 @@ if __name__ == "__main__" :
         if CHECKING_COLLISIONS:
             check_collisions(sim)
         sim.update()
-        iteration += 1
+        for car in sim.cars:
+            car.lap_step += 1
+        step += 1

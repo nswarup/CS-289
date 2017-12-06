@@ -1,3 +1,4 @@
+import sys
 import pygame
 from pygame.locals import *
 from constants import *
@@ -22,9 +23,13 @@ class Car(object):
         self.vel = velocity
         self.accel = 0
 
-        # tracking data
+        # for tracking data
         self.lap = 0
         self.av_following_dist = 0
+
+        self.lap_step = 0 # step in current lap
+        self.min_steps = sys.maxint # min number of steps to complete lap
+        self.max_steps = -sys.maxint - 1 # max number of steps to complete lap
 
     def change_lane(self, direction):
         """
