@@ -9,11 +9,13 @@ from constants import *
 from car import *
 
 # set up screen and clock
-pygame.init()
-screen = pygame.display.set_mode(SCREEN_DIMENSIONS, 0, 32)
-surface = pygame.Surface(screen.get_size()).convert()
-surface = surface.convert()
-surface.fill(BACKGROUND_COLOR)
+screen = surface = None
+if VISUALIZING:
+    pygame.init()
+    screen = pygame.display.set_mode(SCREEN_DIMENSIONS, 0, 32)
+    surface = pygame.Surface(screen.get_size()).convert()
+    surface = surface.convert()
+    surface.fill(BACKGROUND_COLOR)
 clock = pygame.time.Clock()
 
 def draw_lanes():
@@ -30,6 +32,17 @@ def draw_lanes():
             j += LANE_HASH_WIDTH + LANE_HASH_SPACING
         y += LANE_HEIGHT
 
+def check_collisions(sim):
+    """
+    Check whether any cars have crashed.
+    Note: assumes the simulation has a `cars` instance variable.
+    """
+    for i in range(len(sim.cars)):
+        for j in range(i + 1, len(sim.cars)):
+            if (sim.cars[i].lane == sim.cars[j].lane and
+                    sim.cars[i].pos == sim.cars[j].pos):
+                raise RuntimeError("Car crash!")
+
 if __name__ == "__main__" :
 
     # check usage: python main.py NameOfSimulation
@@ -41,17 +54,22 @@ if __name__ == "__main__" :
     sim.initialize()
 
     while True:
-        # quit on any key
-        for event in pygame.event.get():
-            if event.type == QUIT or event.type == KEYDOWN:
-                pygame.quit()
-                sys.exit()
+        if VISUALIZING:
+            clock.tick(FPS)
 
-        # update display
-        draw_lanes()
-        sim.draw(screen)
+            # quit on any key
+            for event in pygame.event.get():
+                if event.type == QUIT or event.type == KEYDOWN:
+                    pygame.quit()
+                    sys.exit()
+
+            # update display
+            draw_lanes()
+            sim.draw(screen)
+            pygame.display.flip()
+            pygame.display.update()
+            screen.blit(surface, (0, 0))
+
         sim.update()
-        pygame.display.flip()
-        pygame.display.update()
-        screen.blit(surface, (0, 0))
-        clock.tick(FPS)
+        if CHECKING_COLLISIONS:
+            check_collisions(sim)

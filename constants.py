@@ -19,15 +19,19 @@ LANE_HASH_DIMENSIONS = (LANE_HASH_WIDTH, LANE_HASH_HEIGHT)
 LANE_HASH_SPACING = 5
 LANE_COLOR = (255, 255, 255)
 
-# screen dimensions (based on number of lanes)
+# screen attributes (based on number of lanes)
 VERTICAL_MARGIN = 40
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = LANES * LANE_HEIGHT + 2 * VERTICAL_MARGIN
 SCREEN_DIMENSIONS = (SCREEN_WIDTH, SCREEN_HEIGHT)
 BACKGROUND_COLOR = (0, 0, 0)
-
-# frame rate
 FPS = 10
+
+# if `False`, will not display visualization or sleep at each loop iteration
+VISUALIZING = True
+
+# if `False`, will not check for collisions at each time step
+CHECKING_COLLISIONS = True
 
 # names of simulator classes
 SIMULATION_NAMES = [
