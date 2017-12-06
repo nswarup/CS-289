@@ -2,6 +2,8 @@ import sys
 import pygame
 from test_sim import TestSim
 from single_lane_idm import SingleLaneIDM
+from multi_lane_idm import MultiLaneIDM
+from lane_switch_idm import LaneSwitchIDM
 from pygame.locals import *
 from constants import *
 from car import *

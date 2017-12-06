@@ -33,4 +33,6 @@ FPS = 10
 SIMULATION_NAMES = [
     'TestSim',
     'SingleLaneIDM',
+    'MultiLaneIDM',
+    'LaneSwitchIDM'
 ]
