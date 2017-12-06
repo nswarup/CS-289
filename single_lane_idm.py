@@ -32,14 +32,6 @@ class SingleLaneIDM(Simulation):
 
     def update(self):
 
-        # determine whether we have any crashes
-        if CHECKING_COLLISIONS:
-            for i in range(NUM_CARS):
-                for j in range(i + 1, NUM_CARS):
-                    if (self.cars[i].lane == self.cars[j].lane and
-                            self.cars[i].pos == self.cars[j].pos):
-                        raise RuntimeError("Car crash!")
-
         for car_index in range(NUM_CARS):
             car = self.cars[car_index]
             v = car.vel

@@ -30,6 +30,17 @@ def draw_lanes():
             j += LANE_HASH_WIDTH + LANE_HASH_SPACING
         y += LANE_HEIGHT
 
+def check_collisions(sim):
+    """
+    Check whether any cars have crashed.
+    Note: assumes the simulation has a `cars` instance variable.
+    """
+    for i in range(len(sim.cars)):
+        for j in range(i + 1, len(sim.cars)):
+            if (sim.cars[i].lane == sim.cars[j].lane and
+                    sim.cars[i].pos == sim.cars[j].pos):
+                raise RuntimeError("Car crash!")
+
 if __name__ == "__main__" :
 
     # check usage: python main.py NameOfSimulation
@@ -58,3 +69,5 @@ if __name__ == "__main__" :
             screen.blit(surface, (0, 0))
 
         sim.update()
+        if CHECKING_COLLISIONS:
+            check_collisions(sim)
