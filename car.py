@@ -21,6 +21,7 @@ class Car(object):
         self.color = CAR_COLOR
         self.vel = velocity
         self.accel = 0
+        self.lap = 0
 
     def change_lane(self, direction):
         """
@@ -42,5 +43,5 @@ class Car(object):
         """
         Draw car at its current position, wrapping around if necessary.
         """
-        r = pygame.Rect((self.pos % SCREEN_WIDTH, self.ypos), CAR_DIMENSIONS)
+        r = pygame.Rect((self.pos, self.ypos), CAR_DIMENSIONS)
         pygame.draw.rect(screen, self.color, r)

@@ -38,15 +38,18 @@ class SingleLaneIDM(Simulation):
             a = car.accel
             if v + a*TIME_STEP < 0:
                 # edge case to make sure you don't go backwards
-                car.pos = (car.pos - (0.5 * (v**2) / a)) % SCREEN_WIDTH
+                car.pos = (car.pos - (0.5 * (v**2) / a))
                 car.vel = 0
             else:
                 # calculate new positions
-                car.pos = (car.pos + v*TIME_STEP + 0.5*a*(TIME_STEP**2)) % SCREEN_WIDTH
+                car.pos = (car.pos + v*TIME_STEP + 0.5*a*(TIME_STEP**2))
 
                 # update velocity
                 car.vel = v + a*TIME_STEP
             v = car.vel
+
+            # wrap around screen if necessary, and update lap counter
+            handle_laps(car)
 
             # update accel
             leading_index = (car_index + 1) % NUM_CARS
@@ -54,7 +57,7 @@ class SingleLaneIDM(Simulation):
             velocity_diff = v - leading_car.vel
             position_diff = leading_car.pos - car.pos
             if leading_car.pos - car.pos < 0:
-                position_diff = 1000 + leading_car.pos - car.pos
+                position_diff = SCREEN_WIDTH + leading_car.pos - car.pos
             s_star = max(0, CLEARING_TIME*v + (v*velocity_diff)/(2*math.sqrt(MAX_ACCEL*MAX_DECCEL)))
             term1 = v / DESIRED_VEL
             term2 = s_star / position_diff

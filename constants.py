@@ -33,6 +33,12 @@ VISUALIZING = True
 # if `False`, will not check for collisions at each time step
 CHECKING_COLLISIONS = True
 
+# macro to handle screen wraparounds
+def handle_laps(car):
+    if car.pos >= SCREEN_WIDTH:
+        car.pos -= SCREEN_WIDTH
+        car.lap += 1
+
 # names of simulator classes
 SIMULATION_NAMES = [
     'TestSim',
