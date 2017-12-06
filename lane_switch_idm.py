@@ -56,7 +56,6 @@ class LaneSwitchIDM(Simulation):
             if options['same_pos'] >= SCREEN_WIDTH:
                 options['same_pos'] -= SCREEN_WIDTH
                 car.lap += 1
-                print car.lap
 
             # changing up
             if car.lane > 0:
