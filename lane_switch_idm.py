@@ -96,10 +96,6 @@ class LaneSwitchIDM(Simulation):
             car.pos = options['same_pos']
             v = car.vel
 
-            # make a decision
-
-
-
             # update accel
             leading_car = None
             for other_car_index in range(car_index+1, car_index+NUM_CARS):
