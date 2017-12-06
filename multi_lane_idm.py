@@ -13,7 +13,7 @@ MAX_ACCEL = .73
 MAX_DECCEL = 2.
 DELTA = 4.
 DESIRED_VEL = 40.
-CLEARING_TIME = 1.5  
+CLEARING_TIME = 1.5
 TIME_STEP = 0.5 # seconds
 LANE_CHANGE_DECCEL = .5
 RADIUS_OBSERVED = 50
@@ -22,9 +22,9 @@ class MultiLaneIDM(Simulation):
 
     def initialize(self):
         # constants
-        self.cars = [Car(pos=random.random()*1000., 
-                            lane=random.randint(0, LANES - 1), 
-                            velocity=float(random.randint(22, 33))) 
+        self.cars = [Car(pos=random.random()*SCREEN_WIDTH,
+                            lane=random.randint(0, LANES - 1),
+                            velocity=float(random.randint(22, 33)))
                     for i in range(NUM_CARS)]
         self.cars = sorted(self.cars, key=lambda x: x.pos)
 
@@ -39,15 +39,18 @@ class MultiLaneIDM(Simulation):
             a = car.accel
             if v + a*TIME_STEP < 0:
                 # edge case to make sure you don't go backwards
-                car.pos = (car.pos - (0.5 * (v**2) / a)) % 1000
+                car.pos = (car.pos - (0.5 * (v**2) / a))
                 car.vel = 0
             else:
                 # calculate new positions
-                car.pos = (car.pos + v*TIME_STEP + 0.5*a*(TIME_STEP**2)) % 1000
+                car.pos = (car.pos + v*TIME_STEP + 0.5*a*(TIME_STEP**2))
 
                 # update velocity
                 car.vel = v + a*TIME_STEP
             v = car.vel
+
+            # wrap around screen if necessary, and update lap counter
+            handle_laps(car)
 
             # update accel
             leading_car = None
@@ -64,9 +67,15 @@ class MultiLaneIDM(Simulation):
                 velocity_diff = v - leading_car.vel
             	position_diff = leading_car.pos - car.pos
             	if leading_car.pos - car.pos < 0:
-                	position_diff = 1000 + leading_car.pos - car.pos
+                	position_diff = SCREEN_WIDTH + leading_car.pos - car.pos
                 s_star = max(0, CLEARING_TIME*v + (v*velocity_diff)/(2*math.sqrt(MAX_ACCEL*MAX_DECCEL)))
+
+                # keep track of running average of following distance
+                car.av_following_dist += float(position_diff) / SAMPLE_POINT
+
                 term2 = s_star / position_diff
+            else:
+                raise RuntimeError("No leading car found")
             car.accel = max(min(MAX_ACCEL, MAX_ACCEL*(1 - term1 - (term2)**2.)), -MAX_DECCEL)
 
         self.cars = sorted(self.cars, key=lambda x: x.pos)

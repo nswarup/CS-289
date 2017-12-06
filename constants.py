@@ -28,10 +28,19 @@ BACKGROUND_COLOR = (0, 0, 0)
 FPS = 10
 
 # if `False`, will not display visualization or sleep at each loop iteration
-VISUALIZING = True
+VISUALIZING = False
 
 # if `False`, will not check for collisions at each time step
-CHECKING_COLLISIONS = True
+CHECKING_COLLISIONS = False
+
+# iteration at which we collect data
+SAMPLE_POINT = 50000
+
+# macro to handle screen wraparounds
+def handle_laps(car):
+    if car.pos >= SCREEN_WIDTH:
+        car.pos -= SCREEN_WIDTH
+        car.lap += 1
 
 # names of simulator classes
 SIMULATION_NAMES = [

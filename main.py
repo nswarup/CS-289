@@ -1,6 +1,6 @@
 import sys
+import csv
 import pygame
-from test_sim import TestSim
 from single_lane_idm import SingleLaneIDM
 from multi_lane_idm import MultiLaneIDM
 from lane_switch_idm import LaneSwitchIDM
@@ -45,15 +45,35 @@ def check_collisions(sim):
 
 if __name__ == "__main__" :
 
-    # check usage: python main.py NameOfSimulation
+    # check usage: python main.py NameOfSimulation [outfilename.csv]
     assert(len(sys.argv) > 1)
     assert(sys.argv[1] in SIMULATION_NAMES)
+
+    # get name of outfile, if any
+    outfile = sys.argv[2] if len(sys.argv) > 2 else 'out.csv'
 
     # instatiate and initialize simulation
     sim = globals()[sys.argv[1]]()
     sim.initialize()
 
+    iteration = 0
     while True:
+
+        # stop to collect data
+        if iteration == SAMPLE_POINT:
+            with open(outfile, 'w') as f:
+                fields = ['laps', 'av_following_dist']
+                writer = csv.DictWriter(f, fieldnames=fields)
+                writer.writeheader()
+                for car in sim.cars:
+                    data = {
+                        'laps': car.lap,
+                        'av_following_dist': round(car.av_following_dist, 2),
+                    }
+                    writer.writerow(data)
+            print 'collected data at iteration ' + str(SAMPLE_POINT)
+            break
+
         if VISUALIZING:
             clock.tick(FPS)
 
@@ -70,6 +90,7 @@ if __name__ == "__main__" :
             pygame.display.update()
             screen.blit(surface, (0, 0))
 
-        sim.update()
         if CHECKING_COLLISIONS:
             check_collisions(sim)
+        sim.update()
+        iteration += 1

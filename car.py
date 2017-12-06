@@ -22,6 +22,10 @@ class Car(object):
         self.vel = velocity
         self.accel = 0
 
+        # tracking data
+        self.lap = 0
+        self.av_following_dist = 0
+
     def change_lane(self, direction):
         """
         Change to a new lane above or below.
@@ -42,5 +46,5 @@ class Car(object):
         """
         Draw car at its current position, wrapping around if necessary.
         """
-        r = pygame.Rect((self.pos % SCREEN_WIDTH, self.ypos), CAR_DIMENSIONS)
+        r = pygame.Rect((self.pos, self.ypos), CAR_DIMENSIONS)
         pygame.draw.rect(screen, self.color, r)
