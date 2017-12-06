@@ -31,10 +31,10 @@ FPS = 10
 VISUALIZING = False
 
 # if `False`, will not check for collisions at each time step
-CHECKING_COLLISIONS = True
+CHECKING_COLLISIONS = False
 
 # iteration at which we collect data
-SAMPLE_POINT = 100000
+SAMPLE_POINT = 50000
 
 # macro to handle screen wraparounds
 def handle_laps(car):
