@@ -72,6 +72,7 @@ if __name__ == "__main__" :
                     }
                     writer.writerow(data)
             print 'collected data at iteration ' + str(SAMPLE_POINT)
+            break
 
         if VISUALIZING:
             clock.tick(FPS)

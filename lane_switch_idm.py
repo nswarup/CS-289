@@ -119,10 +119,17 @@ class LaneSwitchIDM(Simulation):
             if leading_car:
                 velocity_diff = v - leading_car.vel
                 position_diff = leading_car.pos - car.pos
+
                 if leading_car.pos - car.pos < 0:
                     position_diff = SCREEN_WIDTH + leading_car.pos - car.pos
+
+                # track average following distance
+                car.av_following_dist += float(position_diff) / SAMPLE_POINT
+
                 s_star = max(0, CLEARING_TIME*v + (v*velocity_diff)/(2*math.sqrt(MAX_ACCEL*MAX_DECCEL)))
                 term2 = s_star / position_diff
+            else:
+                raise RuntimeError("No leading car found")
             car.accel = max(min(MAX_ACCEL, MAX_ACCEL*(1 - term1 - (term2)**2.)), -MAX_DECCEL)
 
         self.cars = sorted(self.cars, key=lambda x: x.pos)
