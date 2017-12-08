@@ -4,6 +4,8 @@ import pygame
 from single_lane_idm import SingleLaneIDM
 from multi_lane_idm import MultiLaneIDM
 from lane_switch_idm import LaneSwitchIDM
+from single_perturbation import SinglePerturbation
+from multiple_perturbations import MultiplePerturbations
 from pygame.locals import *
 from constants import *
 from car import *

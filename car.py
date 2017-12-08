@@ -1,4 +1,5 @@
 import pygame
+import random
 from pygame.locals import *
 from constants import *
 
@@ -21,6 +22,8 @@ class Car(object):
         self.color = CAR_COLOR
         self.vel = velocity
         self.accel = 0
+        self.stopped = False
+        self.last_switch = random.randint(1, 15)
 
         # tracking data
         self.lap = 0

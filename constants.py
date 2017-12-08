@@ -28,7 +28,7 @@ BACKGROUND_COLOR = (0, 0, 0)
 FPS = 10
 
 # if `False`, will not display visualization or sleep at each loop iteration
-VISUALIZING = False
+VISUALIZING = True
 
 # if `False`, will not check for collisions at each time step
 CHECKING_COLLISIONS = False
@@ -47,5 +47,7 @@ SIMULATION_NAMES = [
     'TestSim',
     'SingleLaneIDM',
     'MultiLaneIDM',
-    'LaneSwitchIDM'
+    'LaneSwitchIDM',
+    'SinglePerturbation',
+    'MultiplePerturbations'
 ]

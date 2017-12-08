@@ -8,7 +8,7 @@ from simulation import Simulation
 from car import Car
 from constants import *
 
-NUM_CARS = 10
+NUM_CARS = 30
 MAX_ACCEL = .73
 MAX_DECCEL = 2.
 DELTA = 4.
@@ -74,8 +74,7 @@ class MultiLaneIDM(Simulation):
                 car.av_following_dist += float(position_diff) / SAMPLE_POINT
 
                 term2 = s_star / position_diff
-            else:
-                raise RuntimeError("No leading car found")
+
             car.accel = max(min(MAX_ACCEL, MAX_ACCEL*(1 - term1 - (term2)**2.)), -MAX_DECCEL)
 
         self.cars = sorted(self.cars, key=lambda x: x.pos)
