@@ -61,7 +61,7 @@ class SingleLaneIDM(Simulation):
                 position_diff = SCREEN_WIDTH + leading_car.pos - car.pos
             s_star = max(0, CLEARING_TIME*v + (v*velocity_diff)/(2*math.sqrt(MAX_ACCEL*MAX_DECCEL)))
 
-            # update running average
+            # update running averages
             car.av_following_dist += float(position_diff) / SAMPLE_POINT
 
             term1 = v / DESIRED_VEL

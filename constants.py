@@ -9,6 +9,7 @@ CAR_WIDTH = 15
 CAR_HEIGHT = 7
 CAR_DIMENSIONS = (CAR_WIDTH, CAR_HEIGHT)
 CAR_COLOR = (230, 0, 0) # dark red
+ID_SPACE = 2 ** 32 # number of different car identifiers
 
 # lane dimensions
 LANES = 4
@@ -39,8 +40,16 @@ SAMPLE_POINT = 50000
 # macro to handle screen wraparounds
 def handle_laps(car):
     if car.pos >= SCREEN_WIDTH:
+
+        # update max/min lap steps, assuming it's not the first lap
+        if car.lap > 0:
+            car.min_steps = min(car.min_steps, car.lap_step)
+            car.max_steps = max(car.max_steps, car.lap_step)
+
+        # update lap and position
         car.pos -= SCREEN_WIDTH
         car.lap += 1
+        car.lap_step = 0
 
 # names of simulator classes
 SIMULATION_NAMES = [

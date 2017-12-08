@@ -126,4 +126,7 @@ class LaneSwitchIDM(Simulation):
 
             car.accel = max(min(MAX_ACCEL, MAX_ACCEL*(1 - term1 - (term2)**2.)), -MAX_DECCEL)
 
+            # handle lap counting
+            handle_laps(car)
+
         self.cars = sorted(self.cars, key=lambda x: x.pos)
